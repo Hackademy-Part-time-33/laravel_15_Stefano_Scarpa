@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Selfwork 14 laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Traccia per creare un progetto riguardante un blog
 
-## About Laravel
+Creare un nuovo progetto blog e creare su GitHub un progetto con nome laravel_14_nome_cognome
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+con tutte le best practices viste fino ad ora ma senza Fortify Completo (impostate solo le funzionalità di Login e Register senza il logout, navbar con @guest/@auth middleware ecc,,,).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-Crea 2 risorse CRUD (Model, Migration, Request, Route, View) per:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Post
+    - Title, stringa
+    - body, longtext
+    - user_id, chiave esterna
+- Tag
+    - Name, stringa
 
-## Learning Laravel
+Le relazioni saranno:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 1 A N (One to Many) tra Post e User (Un utente puo scrivere tanti post, un post appartiene ad un utente)
+- N a N (Many to Many) Tra Post e Tag (Un Post puo avere tanti Tag, un Tag puo avere tanti Post)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+EXTRA
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Dare la possibilità solo all'utente che ha creato l'entità di modificarla
+- Visualizzare tutte le entità create da un dato utente
 
-## Laravel Sponsors
+![schema-db](public/assets/schema-db.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```jsx
+Table posts {
+  id integer [primary key]
+  title varchar
+  body longtext
+  user_id country_code
+  created_at timestamp
+}
 
-### Premium Partners
+Table tags {
+  id integer [primary key]
+  name varchar
+  created_at timestamp
+}
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Table users {
+  id integer [primary key]
+  name varchar
+  email varchar
+  email_verification varchar
+  password varchar
+  created_at timestamp
+}
 
-## Contributing
+table posts_tags {
+  id integer [primary key]
+  posts_id country_code
+  tags_id country_code
+}
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ref: "users"."id" < "posts"."user_id"
 
-## Code of Conduct
+Ref: "posts"."id" < "posts_tags"."posts_id"
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ref: "tags"."id" < "posts_tags"."tags_id"
+```
 
-## Security Vulnerabilities
+## Analisi e task
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Utilizzare tutte le **best practice** usate finora
+    - Named Routes
+    - Controller
+    - Components/Layout
+        - Passare le categorie dentro il componente navbar
+    - Scaffolding con **Vite**
+    
+    Autenticazione con **Laravel Fortify**
+    
+    - login
+    - register
+    - logout
+    - password Dimenticata e Password Reset
+    - Profilo
+- **CRUD** completo di **due modelli** Article e Category
+    - index
+    - create
+    - store
+    - show
+    - edit
+    - update
+    - delete
+- Relazione **One-to-Many** tra User e Article
+- Relazione **Many-to-Many** tra Article e Category
 
-## License
+EXTRA
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Dare la possibilità solo all'utente che ha creato l'entità di modificarla;
+- Ricerca di un articolo per titolo;

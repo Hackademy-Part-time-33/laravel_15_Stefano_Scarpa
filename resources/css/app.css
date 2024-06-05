@@ -1,1 +1,14 @@
 @import 'bootstrap';
+
+body {
+    font-family: "Noto Sans", sans-serif;
+}
+
+.form-auth {
+    width: 500px;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: none !important;
+}
