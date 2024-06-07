@@ -20,7 +20,12 @@
                     <label for="email">Password</label>
                 </div>
                 
-                <div class="d-grid"><button class="btn btn-primary btn-md mb-3" type="submit">Accedi</button>
+                <div class="d-grid my-2">
+                    <button class="btn btn-primary btn-md mb-3" type="submit">Accedi</button>
+                    <a class="btn btn-outline-dark" href="{{route('github.redirect')}}"><i class="bi bi-github"></i> Accedi con github</a>
+                </div>
+
+                <div class="d-grid">
                     <a class="" type="submit" href="{{route('register')}}">Non sei registrato? Iscriviti!</a>
                 </div>
                 

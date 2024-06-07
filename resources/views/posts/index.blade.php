@@ -32,14 +32,14 @@
                                 <img class="card-img-top" style="width:3rem" src="{{ Storage::url($post->image) }}"
                                     alt="..." />
                             </td>
-                            <td>{{$post->user->name}}</td>
+                            <td>{{ $post->user->name }}</td>
                             <td>{{ $post->title }}</td>
                             
                             <td>
     
                                 <div class="d-grid gap-1 d-md-flex justify-content-md-end">
     
-                                    @if ($post->id === Auth::user()->id)    
+                                    @if ($post->user_id === auth()->user()->id)    
                                     <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
                                         class="btn me-md-2">
                                         <span class="material-symbols-outlined">edit_square</span>

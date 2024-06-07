@@ -22,6 +22,9 @@
                         <button class="btn btn-sm text-danger nav-link" type="submit"><span class="material-symbols-outlined">logout</span></button>
                     </li>
                 </form>
+                <li class="nav-item">
+                    <img src="{{Auth::user()->user_image}}" class="img-fluid rounded nav-link" style="width: 50px" alt="">
+                </li>
                 @else
                 <li class="nav-item"><a class="btn btn-sm btn-outline-dark m-auto" href="{{route('login')}}">Login</a></li>
                 <li class="nav-item"><a class="btn btn-sm btn-outline-dark m-auto" href="{{route('register')}}">Register</a></li>

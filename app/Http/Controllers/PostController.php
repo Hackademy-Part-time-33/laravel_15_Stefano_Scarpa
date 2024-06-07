@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -22,7 +23,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        $posts = Post::all();
+        return view('posts.create', compact('tags', 'posts'));
     }
 
     /**
@@ -30,7 +33,21 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $path_image = '';
+        if ($request->hasFile('image')) {
+            $path_name = $request->file('image')->getClientOriginalName();
+            $path_image = $request->file('image')->storeAs('public/images', $path_name);
+        }
+
+        $post = Post::create([
+            'title' => $request->title,
+            'image' => $path_image,
+            'body' => $request->body,
+            'user_id' => auth()->user()->id
+        ]);
+        
+        $post->tags()->attach($request->tags);
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -38,7 +55,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -46,7 +63,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if ($post->user_id !== auth()->user()->id){
+            abort(403);
+        }
+        
+        $tags = Tag::all();
+        return view('posts.edit', compact('post', 'tags'));
+
     }
 
     /**
@@ -54,7 +77,21 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $path_image = $post->image;
+        if ($request->hasFile('image')) {
+            $path_name = $request->file('image')->getClientOriginalName();
+            $path_image = $request->file('image')->storeAs('public/images', $path_name);
+        }
+
+        $post->update([
+            'title' => $request->title,
+            'image' =>  $path_image,
+            'body' => $request->body,
+        ]);
+        $post->tags()->detach();
+        $post->tags()->attach($request->tags);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -62,6 +99,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->tags()->detach();
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }
