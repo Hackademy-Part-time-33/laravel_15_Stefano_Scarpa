@@ -22,6 +22,7 @@
                 {{ $message }}
                 @enderror
             </div>
+            <div class="form-floating mb-3 p-3 border">
             @foreach ($tags as $tag)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="categories[]"
@@ -29,6 +30,7 @@
                 <label class="form-check-label" for="category_id">{{ $tag->name }}</label>
             </div>
             @endforeach
+        </div>
             <div class="form-floating mb-3">
                 <img src="{{Storage::url($post->image)}}" alt="">
                 <input class="form-control" id="image" name="image" value type="file">

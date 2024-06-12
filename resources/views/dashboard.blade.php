@@ -25,8 +25,8 @@
                     class="h-100 p-5 bg-body-tertiary border rounded">
                     <h2>Gestione Categorie</h2>
                     
-                    <button class="btn btn-outline-secondary rounded"
-                    type="button">Vedi categorie</button>
+                    <a class="btn btn-outline-dark rounded"
+                        type="button" href="{{route('tags.index')}}">Vedi categorie</a>
                 </div>
             </div>
             <div class="col-md-4">

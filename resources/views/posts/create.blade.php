@@ -21,7 +21,7 @@
                     {{ $message }}
                 @enderror
             </div>
-            <div class="mb-3">
+            <div class=" form-floating mb-3 p-3 border">
                 @foreach ($tags as $tag)
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="tags[]"
